@@ -18,7 +18,10 @@ Read the narrowest one that applies before you write code.
 - `docs/tickets/` — the tickets engineers work, written as they arrive on a sprint board
 - `docs/specs/` — where plans go before code does, and the template they follow
 - `docs/ORG-STANDARDS.md` — the org-wide engineering standards every service is measured against
-- `.claude/` — the skills (`/spec`, `/pr`, `/ship-ready`) and the `bug-investigator` subagent. Open Claude Code at this root and they are available everywhere
+- `.claude/` — the skills, subagents and hook below. Open Claude Code at this root and they are available everywhere
+  - Skills: `/spec`, `/pr`, `/ship-ready`, `/submit`, and `/northwind-pr`, which fills in the PR template with a business-impact line and only the verification that actually ran
+  - Subagents: `bug-investigator` (diagnoses a symptom) and `org-standards` (audits code against every numbered item in `docs/ORG-STANDARDS.md`). Both are read-only
+  - Hook: `.claude/hooks/pre-push-check.sh`, registered in `.claude/settings.json`. Before Claude runs `git push`, it runs `npm test` and `npm run build` in `build-battle/merchant-console` and blocks the push if either fails
 - `build-battle/` — the exercise brief and the scoring rubric
 - `build-battle/merchant-console/` — Northwind Payments, the application itself
 - `.github/` — pull request template and the grading workflow
